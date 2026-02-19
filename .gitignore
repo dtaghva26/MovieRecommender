@@ -1,0 +1,71 @@
+# --- data (raw/intermediate/processed) ---
+/recommender/data/
+/recommender/dataset/
+/recommender/datasets/
+/recommender/raw/
+/recommender/processed/
+/recommender/interim/
+/recommender/external/
+
+# common data file types (if you keep some data in other places)
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.pkl
+*.pickle
+*.csv
+*.tsv
+*.jsonl
+*.db
+*.sqlite
+*.sqlite3
+
+# --- outputs / artifacts ---
+/recommender/outputs/
+/recommender/output/
+/recommender/results/
+/recommender/reports/
+/recommender/figures/
+/recommender/plots/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.docx
+
+# --- models / checkpoints ---
+/recommender/models/
+/recommender/checkpoints/
+/recommender/runs/
+/recommender/logs/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# --- caches ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.cache/
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+
+# --- environments / secrets ---
+.env
+.env.*
+*.key
+*.pem
+secrets/
+credentials.json
+
+# --- notebooks & local config (optional) ---
+.vscode/
+.idea/
+.DS_Store
