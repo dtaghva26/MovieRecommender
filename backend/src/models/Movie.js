@@ -10,4 +10,4 @@ const movieSchema = new Schema({
         type: Number
     }
 })
-module.exports = new Model("Movie", movieSchema)
+module.exports = new model("Movie", movieSchema)
