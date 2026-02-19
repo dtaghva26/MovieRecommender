@@ -1,8 +1,7 @@
 import mongoose from "mongoose"
 export const db_config = async () => {
     try{
-        const connection_url = "mongodb://localhost:27017/MovieRanking"
-        const connection = await mongoose.connect(connection_url)
+        const connection = await mongoose.connect(process.env.Mongo)
         console.log("mongoose connected!")
 
     }catch(error){
