@@ -1,5 +1,5 @@
 import dotenv from "dotenv"
-dotenv.config() //config .env before calling db_config
+dotenv.config() 
 import express from "express"
 import { db_config } from "./config/db_config.js"
 import userRouter from "./routes/UserRoutes.js"
