@@ -1,53 +1,32 @@
+import AuthService from "../services/auth_service.js";
+import EmailService from "../services/email_service.js"
+const UserController = {
+  register: async (req, res) => {
+    let user = await AuthService.register(req.body);
+    await EmailService.send_welcome_email(user.email).catch(err => {
+      console.log("sending email failed")
+      console.log(err)
+    })
+    return res.status(201).json({ message: "success" });
+  },
+  login: async(req, res) => {
 
-import sendEmail  from "../config/email_config.js";
-import User from "../models/User.js";
+  },
+  rateMovies: async(req, res) => {
 
-const UsereController = {
-    register: async (req, res) => {
-        let {username, email, password, age} = req.body
-        if (await User.findOne({'username': username}))
-        {
-            return res.status(409).json({
-                message: "username already exists"
-            })
-        }
-        if (await User.findOne({'email': email}))
-        {
-            return res.status(409).json({
-                message: "email already exists"
-            })
-        }
-        let user = await User.create({
-            'username': username,
-            'email': email,
-            'password': password, //TODO 
-            'age': age
-        })
-        await sendEmail({
-            to: user.email,
-            subject: "welcome to our app!",
-            text:"welcome to our movie rating app"
-        })
-        res.status(200).json({
-            message: "success"
-        })
-    },
-    login: (req, res) => {
+  },
+  seeHomeRecommendations: async(req, res) => {
 
-    },
-    rateMovies: (req, res) => {
+  },
+  seeWhyThisMovieIsRecommended: async(req, res) => {
 
-    },
-    seeHomeRecommendations : (req, res) => {
+  },
+  rateRecommendation: async(req, res) => {
 
-    },
-    seeWhyThisMovieIsRecommended : (req, res) => {
+  }
 
-    },
-    rateRecommendation : (req, res) => {
 
-    }
+  
+};
 
-}
-
-export default UsereController;
+export default UserController;
