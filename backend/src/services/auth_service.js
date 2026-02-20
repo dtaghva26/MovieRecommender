@@ -30,5 +30,19 @@ const AuthService = {
     
 return { id: user._id.toString(), email: user.email, username: user.username };
   },
+  async login({username, password}){
+    if(!username || !password){
+      throw new AppError("Missing required fields", 400, "VALIDATION_ERROR");
+    }
+    const user = await User.findOne({username: username})
+    if(!user){
+      throw new AppError("Username doesn't exist, please register", 400, "VALIDATION_ERROR")
+    }
+    if(await PasswordService.areIdenticalPassword(user.password, password))
+    {
+      return user; 
+    }
+    throw new AppError("Wrong Password", 409, "WRONG_PASSWORD")
+  }
 };
 export default AuthService;

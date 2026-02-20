@@ -9,7 +9,6 @@ const app = express()
 const PORT = process.env.PORT
 await db_config() //connect to mongodb
 app.use(cors()) //needed for connecting to frontend
-app.use(cors()) //needed for connecting to frontend
 app.use(express.json())//handling json response
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/admin", adminRouter)

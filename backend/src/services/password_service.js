@@ -6,6 +6,9 @@ const PasswordService = {
         }
         const hashed_password = await bcrypt.hash(password, 12)
         return hashed_password
+    },
+    areIdenticalPassword: async function(hashed_password, entered_password){
+        return bcrypt.compare(entered_password, hashed_password)
     }
 }
 export default PasswordService
