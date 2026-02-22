@@ -69,3 +69,4 @@ credentials.json
 .vscode/
 .idea/
 .DS_Store
+/backend/src/basicthings.js

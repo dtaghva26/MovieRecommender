@@ -1,32 +1,52 @@
-import pg from "pg" //TODO
-import AppError from "./AppError.js" //TODO
+import "dotenv/config";
+import pg from "pg";
+import AppError from "./AppError.js";
 
-const { Pool } = pg //TODO
+const { Pool } = pg;
 
-let pool //TODO
+let pool; 
 
-const db_config = async () => { //TODO
-  if (!process.env.DATABASE_URL) { //TODO
-    throw new AppError("DATABASE_URL is not defined", 500, "DB_CONFIG_ERROR") //TODO
-  } //TODO
+const db_config = async () => {
+  // console.log("hello")
+  console.log("inside db config function")
+  console.log(process.env.DEFAULT_DB_URL)
+  if (!process.env.DEFAULT_DB_URL) {
+    throw new AppError("DEFAULT_DB_URL is not defined", 500, "DB_CONFIG_ERROR");
+  }
 
-  pool = new Pool({ connectionString: process.env.DATABASE_URL }) //TODO
+  // Reuse if already created
+  if (pool) return pool;
 
-  await pool.query(` //TODO
-    CREATE TABLE IF NOT EXISTS users ( //TODO
-      id SERIAL PRIMARY KEY, //TODO
-      username VARCHAR(255) UNIQUE NOT NULL, //TODO
-      email VARCHAR(255) UNIQUE NOT NULL, //TODO
-      password VARCHAR(255) NOT NULL, //TODO
-      age INTEGER DEFAULT 18, //TODO
-      created_at TIMESTAMPTZ DEFAULT NOW(), //TODO
-      updated_at TIMESTAMPTZ DEFAULT NOW() //TODO
-    ) //TODO
-  `) //TODO
+  try {
+    pool = new Pool({
+      connectionString: process.env.DEFAULT_DB_URL,
+      ssl:
+        process.env.DEFAULT_DB_SSL === "true"
+          ? { rejectUnauthorized: false }
+          : undefined,
+      max: Number(process.env.DEFAULT_DB_POOL_MAX || 10),
+      idleTimeoutMillis: Number(process.env.DEFAULT_DB_POOL_IDLE_MS || 30_000),
+      connectionTimeoutMillis: Number(
+        process.env.DEFAULT_DB_POOL_CONN_TIMEOUT_MS || 5_000
+      ),
+    });
 
-  console.log("postgres database connected") //TODO
-} //TODO
+    // One-time connection test (fail fast on bad creds/host/ssl)
+    await pool.query("SELECT 1");
 
-export const query = (text, params) => pool.query(text, params) //TODO
+    console.log("PostgreSQL connected");
+    return pool;
+  } catch (err) {
+    // If initialization fails, don’t keep a broken pool around
+    pool = undefined;
 
-export default db_config //TODO
+    throw new AppError(
+      `PostgreSQL connection failed: ${err.message}`,
+      500,
+      "DB_CONFIG_ERROR"
+    );
+  }
+};
+export const query = (text, params) => pool.query(text, params) 
+
+export default db_config;
