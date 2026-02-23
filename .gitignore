@@ -70,3 +70,4 @@ credentials.json
 .idea/
 .DS_Store
 /backend/src/basicthings.js
+/git_init.ipynb
