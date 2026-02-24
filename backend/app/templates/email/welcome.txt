@@ -1,0 +1,9 @@
+Welcome to Movie Recommender 🎬
+
+Hi {{ username }},
+
+Your account was created successfully 🎉
+
+Start discovering movies tailored to your taste 🍿
+
+— Movie Recommender
