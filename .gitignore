@@ -6,6 +6,9 @@
 /recommender/processed/
 /recommender/interim/
 /recommender/external/
+/recommender/venv/
+venv/
+.venv/
 
 # common data file types (if you keep some data in other places)
 *.parquet
